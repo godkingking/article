@@ -18,6 +18,7 @@ def add_task(db: Session, task_form: TaskForm):
     task = Task(**task_form.model_dump(exclude={"id"}))
     db.add(task)
     db.flush()
+    db.commit()
     restart_scheduler()
     return success(task)
 
@@ -30,6 +31,7 @@ def update_task(db: Session, task_form: TaskForm):
         task.task_args = task_form.task_args
         task.task_cron = task_form.task_cron
         task.enable = task_form.enable
+        db.commit()
         db.flush()
         restart_scheduler()
     return success(task)
@@ -39,6 +41,7 @@ def delete_task(db: Session, task_id):
     task = db.get(Task, task_id)
     if task:
         db.delete(task)
+        db.commit()
         restart_scheduler()
     return success()
 
