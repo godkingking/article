@@ -5,8 +5,6 @@ from app.api.deps import get_current_user
 from app.api.services import task_service
 from app.core.database import get_db
 from app.models import User
-from app.models.task import Task
-from app.schemas.response import success
 from app.schemas.task import TaskForm, TaskLogFilter
 
 router = APIRouter()

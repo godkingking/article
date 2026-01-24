@@ -2,7 +2,8 @@ import json
 
 from sqlalchemy.orm import Session
 
-from app.enum import DownloadClientEnum, PusherEnum
+from app.core.config import config_manager
+from app.enum import DownloadClientEnum, PusherEnum, SystemConfigEnum
 from app.models import Config
 from app.modules.downloadclient.manager import downloadManager
 from app.modules.notification.manager import pushManager
@@ -24,6 +25,8 @@ def save_option(json_payload: JsonPayload, db: Session):
         downloadManager.reload(json_payload.key, json_payload.payload)
     if json_payload.key in [item.value for item in PusherEnum]:
         pushManager.reload(json_payload.key, json_payload.payload)
+    if json_payload.key == SystemConfigEnum.SYSTEM_CONFIG.value:
+        config_manager.reload(json_payload.payload)
     return success()
 
 

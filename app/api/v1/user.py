@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from fastapi import Depends, HTTPException, APIRouter
+from fastapi import Depends,  APIRouter
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 

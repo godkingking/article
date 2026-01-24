@@ -8,9 +8,9 @@ from starlette.responses import JSONResponse, FileResponse
 from starlette.staticfiles import StaticFiles
 
 from app.api.v1 import article, user, config, task, download_log, rule
-from app.core.config import root_path
+from app.core.config import root_path, config_manager
 from app.core.database import Base, engine, session_scope
-from app.enum import PusherEnum, DownloadClientEnum
+from app.enum import PusherEnum, DownloadClientEnum, SystemConfigEnum
 from app.models import Config
 from app.modules.downloadclient.cloudnas.cloudnas import CloudNas
 from app.modules.downloadclient.manager import downloadManager
@@ -22,6 +22,14 @@ from app.modules.notification.telegram import TelegramNotifier
 from app.modules.notification.wechat import WeChatNotifier
 from app.scheduler import start_scheduler, scheduler
 from app.utils.log import logger
+
+
+def load_system_config():
+    with session_scope() as session:
+        config = session.query(Config).filter(Config.key == SystemConfigEnum.SYSTEM_CONFIG.value).first()
+        if config:
+            system_config = json.loads(config.content)
+            config_manager.reload(system_config)
 
 
 def load_downloader_manager():
@@ -55,11 +63,13 @@ def load_pusher_manager():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
+    # 加载系统配置
+    load_system_config()
     # 加载下载管理器
     load_downloader_manager()
     # 加载通知管理器
     load_pusher_manager()
-    start_scheduler()
+    # start_scheduler()
     logger.success("服务已启动: http://127.0.0.1:8080")
     yield
     if scheduler.running:

@@ -13,3 +13,7 @@ class DownloadClientEnum(Enum):
 class PusherEnum(Enum):
     WECHAT = "Notification.wechat"
     TELEGRAM = "Notification.telegram"
+
+@unique
+class SystemConfigEnum(Enum):
+    SYSTEM_CONFIG = "SystemConfig"

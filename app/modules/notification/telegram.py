@@ -5,7 +5,7 @@ import telebot
 
 from telebot import apihelper
 
-from app.core import settings
+from app.core.config import config_manager
 from app.enum import PusherEnum
 from app.modules.notification.base import BaseSender
 from app.utils.log import logger
@@ -16,8 +16,8 @@ def get_image(image_url):
         resp = requests.get(
             image_url,
             proxies={
-                'https': settings.PROXY,
-                'http': settings.PROXY,
+                'https': config_manager.get().PROXY,
+                'http': config_manager.get().PROXY,
             },
             stream=True,
             timeout=10,
@@ -42,7 +42,7 @@ class TelegramNotifier(BaseSender):
         self.conf = conf
         try:
             self.bot = telebot.TeleBot(self.conf.get('bot_token'))
-            apihelper.proxy = {'https': settings.PROXY}
+            apihelper.proxy = {'https': config_manager.get().PROXY}
         except Exception as e:
             logger.error(f"TG机器人创建失败：{e}")
 

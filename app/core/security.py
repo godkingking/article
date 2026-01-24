@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta, timezone
-from jose import jwt, JWTError
+from jose import jwt
 from passlib.context import CryptContext
 
-SECRET_KEY = "CHANGE_ME_TO_A_RANDOM_SECRET"
+SECRET_KEY = "RANDOM_SECRET_RANDOM"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 60 * 24
 

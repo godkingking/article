@@ -1,6 +1,5 @@
 import json
 import threading
-from typing import List
 
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
@@ -56,9 +55,8 @@ def run_task(db: Session, task_id: int):
         kwargs = {}
         if args:
             kwargs = json.loads(str(args))
-        func = find_func(task.task_func)["func"]
         threading.Thread(
-            target=func,
+            target=find_func(task.task_func)["func"],
             kwargs=kwargs
         ).start()
     return success()

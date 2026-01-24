@@ -1,11 +1,10 @@
-import json
 from typing import Dict, List
 
 from sqlalchemy import func, exists
 from sqlalchemy.orm import Session
 
 from app.core.database import session_scope
-from app.models import Config, DownloadLog, Rule
+from app.models import DownloadLog, Rule
 from app.models.article import Article
 from app.modules.downloadclient.manager import downloadManager
 from app.modules.notification.manager import pushManager

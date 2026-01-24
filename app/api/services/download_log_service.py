@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, select, func
+from sqlalchemy import desc
 
 from app.models import DownloadLog, Article
 from app.schemas.download_log import DownloadLogFilter
