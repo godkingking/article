@@ -33,7 +33,7 @@ class CloudNas(BaseDownloader):
                     "X-User-Agent": "grpc-python/1.0",
                     "X-Grpc-Web": "1",
                 }
-                url = f"{self.config.get('url').rstrip()}/clouddrive.CloudDriveFileSrv/GetToken"
+                url = f"{self.config.get('url').rstrip('/')}/clouddrive.CloudDriveFileSrv/GetToken"
                 response = requests.post(url, data=payload, headers=headers)
                 raw_response = response.content
                 if len(raw_response) >= 5:
@@ -67,7 +67,7 @@ class CloudNas(BaseDownloader):
                     "X-Grpc-Web": "1",  # 关键：告诉服务器你是 grpc-web 客户端
                     "Authorization": "Bearer " + token,
                 }
-                url = f"{self.config.get('url')}/clouddrive.CloudDriveFileSrv/AddOfflineFiles"
+                url = f"{self.config.get('url').rstrip('/')}/clouddrive.CloudDriveFileSrv/AddOfflineFiles"
                 try:
                     response = requests.post(url, data=payload, headers=headers)
                     if response.headers:
