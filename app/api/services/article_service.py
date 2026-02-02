@@ -188,14 +188,13 @@ def convert_save_path(article: Article, original_save_path):
 
 def download_magnet(article: Article, magnet, downloader, save_path):
     save_path = convert_save_path(article, save_path)
-
     is_success = downloadManager.download(f'Downloader.{downloader}', magnet, save_path)
     if is_success:
         with session_scope() as db:
             download_log = DownloadLog()
             download_log.tid = article.tid
             download_log.magnet = magnet
-            download_log.save_path = convert_save_path(article, save_path)
+            download_log.save_path = save_path
             download_log.downloader = downloader
             db.add(download_log)
     return is_success

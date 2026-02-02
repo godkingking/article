@@ -40,10 +40,10 @@ class CloudNas(BaseDownloader):
         response = self.stub.GetToken(request)
         if response.success:
             self.jwt_token = response.token
-            print(f"认证成功。令牌过期时间: {response.expiration}")
+            logger.success(f"认证成功。令牌过期时间: {response.expiration}")
             return True
         else:
-            print(f"认证失败: {response.errorMessage}")
+            logger.error(f"认证失败: {response.errorMessage}")
             return False
 
     def _create_authorized_metadata(self):
@@ -62,7 +62,6 @@ class CloudNas(BaseDownloader):
             except Exception as e:
                 logger.error(e)
                 return False
-            print(response)
             if response.success:
                 logger.success(f"离线任务创建成功")
                 return True
