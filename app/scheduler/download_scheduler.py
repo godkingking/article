@@ -13,10 +13,10 @@ from app.utils.wrapper import task_monitor
 
 
 def to_number_list(
-    value: Any,
-    *,
-    allow_float: bool = False,
-    empty_ok: bool = False
+        value: Any,
+        *,
+        allow_float: bool = False,
+        empty_ok: bool = False
 ) -> List[int | float]:
     """
     将 value 转换为数字列表
@@ -70,6 +70,7 @@ def to_number_list(
 
     raise ValueError(f"不支持的类型：{type(value).__name__}")
 
+
 @task_monitor
 def download_by_route(rule_id_list):
     try:
@@ -90,9 +91,9 @@ def download_by_route(rule_id_list):
             with session_scope() as session:
                 query = session.query(Article).filter(Article.create_time.between(start_time, now),
                                                       ~exists().where(DownloadLog.tid == Article.tid))
-                if rule.section:
+                if rule.section and rule.section != 'ALL':
                     query = query.filter(Article.section == rule.section)
-                if rule.category:
+                if rule.category and rule.category != 'ALL':
                     query = query.filter(Article.category == rule.category)
                 articles = query.all()
                 if rule.regex:
