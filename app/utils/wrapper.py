@@ -57,7 +57,7 @@ def task_monitor(func):
                             f"【板块】：{row['section']}\n"
                             f"✅ 成功数量：{row['success_count']}\n"
                             f"📄 页码：{row['page']}\n"
-                            f"❌ 失败列表：{','.join(row['fail_list'])}"
+                            f"❌ 失败列表：{','.join(str(x) for x in row['fail_list'])}"
                         )
                         pushManager.send(text, with_template=False, title="爬取任务结果")
             if f["func_name"] in ['download_by_route']:
@@ -66,7 +66,7 @@ def task_monitor(func):
                         text = (
                             f"【任务ID】：{row['id']}\n"
                             f"✅ 成功数量：{row['success_count']}\n"
-                            f"❌ 失败列表：{','.join(row['fail_list'])}"
+                            f"❌ 失败列表：{','.join(str(x) for x in row['fail_list'])}"
                         )
-                        pushManager.send(text, with_template=False, titile="下载任务结果")
+                        pushManager.send(text, with_template=False, title="下载任务结果")
     return wrapper

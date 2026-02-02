@@ -66,7 +66,7 @@ class CloudNas(BaseDownloader):
                 logger.success(f"离线任务创建成功")
                 return True
             else:
-                logger.error(f"离线任务创建成功:{response.errorMessage}")
+                logger.error(f"离线任务创建失败:{response.errorMessage}")
                 return False
         return False
 
