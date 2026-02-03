@@ -1,7 +1,7 @@
 services:
   article:
-    image: article:latest
-    container_name: article
+    image: immortal:latest
+    container_name: immortal
     network_mode: bridge
 
     ports:
