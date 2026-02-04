@@ -20,6 +20,7 @@ def get_download_log_page(
 
             Article.section.label("section"),
             Article.category.label("category"),
+            Article.website.label("website"),
             Article.title.label("title"),
             Article.size.label("size"),
             Article.preview_images.label("preview_images"),
@@ -62,9 +63,12 @@ def get_download_log_page(
                 "tid": r.tid,
                 "section": r.section,
                 "category": r.category,
+                "website": r.website,
                 "title": r.title,
                 "size": r.size,
-                "preview_images": r.preview_images,
+                "img_list": ','.join(
+                    [f'/api/v1/img-proxy/?url={url}' for url in
+                     r.preview_images]) if r.preview_images and r.website == 'x1080x' else r.preview_images,
                 "downloader": r.downloader,
                 "save_path": r.save_path,
                 "download_time": r.download_time,

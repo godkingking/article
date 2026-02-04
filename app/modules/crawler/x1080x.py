@@ -12,19 +12,21 @@ class X1080X:
     domain = 'https://agaghhh.cc'
 
     def bypass_cf(self, url):
-        payload = {
-            "cmd": "request.get",
-            "url": url,
-            "maxTimeout": 60000,
-            "proxy": {"url": config_manager.get().PROXY},
-        }
-        res = requests.post(config_manager.get().FLARE_SOLVERR_URL, headers={"Content-Type": "application/json"},
-                            json=payload)
-        result = res.json()
-        if result['solution']['status'] != 200:
-            return None
-        html = result['solution']['response']
-        return html
+        if config_manager.get().FLARE_SOLVERR_URL:
+            payload = {
+                "cmd": "request.get",
+                "url": url,
+                "maxTimeout": 60000,
+                "proxy": {"url": config_manager.get().PROXY},
+            }
+            res = requests.post(config_manager.get().FLARE_SOLVERR_URL, headers={"Content-Type": "application/json"},
+                                json=payload)
+            result = res.json()
+            if result['solution']['status'] != 200:
+                return None
+            html = result['solution']['response']
+            return html
+        return None
 
     def get_tid_from_list(self, fid, typeid, page):
 
@@ -71,9 +73,3 @@ class X1080X:
 
 x1080x = X1080X()
 
-if __name__ == '__main__':
-    x1080x = X1080X()
-    tids = x1080x.get_tid_from_list('244', '5212', 1)
-    for tid in tids:
-        article = x1080x.get_detail_by_tid(tid)
-        print(article)

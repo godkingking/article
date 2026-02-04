@@ -7,7 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse, FileResponse
 from starlette.staticfiles import StaticFiles
 
-from app.api.v1 import article, user, config, task, download_log, rule, token
+from app.api.v1 import article, user, config, task, download_log, rule, token, img_proxy
 from app.core.config import root_path, config_manager
 from app.core.database import Base, engine, session_scope
 from app.enum import PusherEnum, DownloadClientEnum, SystemConfigEnum
@@ -96,6 +96,8 @@ app.include_router(task.router, prefix='/api/v1/tasks', tags=["task"])
 app.include_router(download_log.router, prefix='/api/v1/download-log', tags=["download-log"])
 app.include_router(rule.router, prefix='/api/v1/rules', tags=["rule"])
 app.include_router(token.router, prefix='/api/v1/tokens', tags=["token"])
+
+app.include_router(img_proxy.router, prefix='/api/v1/img-proxy', tags=["img-proxy"])
 
 DIST_DIR = os.path.join(root_path, "frontend", "dist")
 

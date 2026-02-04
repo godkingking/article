@@ -50,7 +50,7 @@ def task_monitor(func):
 
             with session_scope() as session:
                 session.add(task_log)
-            if f["func_name"] in ['sync_sht_by_tid', 'sync_sht_by_max_page']:
+            if f["func_name"] in ['sync_sht_by_tid', 'sync_sht_by_max_page','sync_x1080_by_tid','sync_x1080_by_max_page']:
                 for row in result:
                     if row['success_count'] > 0 or len(row['fail_list']) > 0:
                         text = (

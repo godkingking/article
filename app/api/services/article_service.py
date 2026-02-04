@@ -40,6 +40,13 @@ def get_article_list(db: Session, query: ArticleQuery) -> Dict:
     items = []
     for article, in_stock in rows:
         setattr(article, "in_stock", in_stock)
+        if article.website == 'x1080x' and article.preview_images:
+            imgs = article.preview_images.split(',')
+            imgs = [f'/api/v1/img-proxy/?url={url}' for url in imgs]
+            imgs_list = ','.join(imgs)
+            setattr(article, "img_list", imgs_list)
+        else:
+            setattr(article, "img_list", article.preview_images)
         items.append(article)
     has_more = len(items) == query.page_size
     return success({
